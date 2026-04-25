@@ -53,6 +53,15 @@ SERVER_PORT=8080
 # Clonar repositorio
 git clone [https://github.com/jcast2023/elecciones-peru-backend.git](https://github.com/jcast2023/elecciones-peru-backend.git)
 
+## 🗄️ Diseño de Base de Datos (MySQL)
+
+El sistema utiliza un esquema relacional optimizado para consultas de alta velocidad y análisis de integridad ética. Las entidades clave incluyen:
+
+* **Candidatos:** Almacena perfiles, fotos y metadatos biográficos.
+- **Denuncias:** Tabla crítica para el motor de penalización, vinculada a cada candidato.
+* **Propuestas:** Organizadas por categorías (Seguridad, Salud, Economía) para facilitar el análisis semántico.
+- **Preguntas/Opciones:** Estructura dinámica que permite modificar el test de afinidad sin tocar el código.
+
 # Instalar y compilar
 mvn clean install
 
