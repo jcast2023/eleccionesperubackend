@@ -16,7 +16,6 @@ Backend de alto rendimiento para **VotaBienPe**, diseñado para procesar informa
 | **Framework** | Spring Boot 4.0.5 |
 | **Base de Datos** | MySQL 8.0 |
 | **IA & NLP** | LangChain4j, Apache OpenNLP, ONNX |
-| **Seguridad** | JWT (JSON Web Tokens) |
 
 ---
 
@@ -43,7 +42,7 @@ Uso de **Embeddings** para analizar planes de gobierno conceptualmente, detectan
 
 Edita tu archivo `src/main/resources/application.properties`:
 
-```properties
+properties
 DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=Elecciones2026
@@ -60,11 +59,20 @@ mvn clean install
 # Ejecutar aplicación
 mvn spring-boot:run
 
-📍 API Endpoints (v1)MétodoEndpointDescripciónGET/api/candidatosListado de candidatosPOST/api/matchTest de afinidad políticaGET/api/comparar-fullComparativa IA profunda
+##📍 API Endpoints Principales
+Controlador           Funcionalidad
+CandidatoController   Gestión de perfiles y hojas de vida
+PreguntaController     Manejo del banco de preguntas para el test.
+PropuestaController    Consulta de planes de gobierno por categorías.
+ChatController         Interfaz para el chatbot electoral.
+ReporteController      Generación de reportes y feedback de errores.
 
+##🏗️ Estructura del Proyecto (Paquetes)
 src/main/java/com/elecciones/eleccionesperubackend/
-├── controller      # Endpoints REST
-├── dto             # Objetos de transferencia
-├── mapper          # Entidad <-> DTO
-├── model           # Entidades JPA
-└── service         # Lógica de IA y Match
+src/main/java/com/elecciones/eleccionesperubackend/
+├── controller   # Endpoints REST (Candidato, Chat, Contacto, etc.)
+├── dto          # Objetos de transferencia (ComparacionDTO, MatchResultDTO)
+├── mapper       # Mapeo de Entidades a DTOs
+├── model        # Entidades JPA (Candidato, Denuncia, Opcion, Regla)
+├── repository   # Interfaces de acceso a datos (Spring Data JPA)
+└── service      # Lógica de IA, Match y Similitud Textual
