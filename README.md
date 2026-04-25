@@ -59,20 +59,30 @@ mvn clean install
 # Ejecutar aplicación
 mvn spring-boot:run
 
-##📍 API Endpoints Principales
-Controlador           Funcionalidad
-CandidatoController   Gestión de perfiles y hojas de vida
-PreguntaController     Manejo del banco de preguntas para el test.
-PropuestaController    Consulta de planes de gobierno por categorías.
-ChatController         Interfaz para el chatbot electoral.
-ReporteController      Generación de reportes y feedback de errores.
+## 📍 API Endpoints Principales
 
-##🏗️ Estructura del Proyecto (Paquetes)
+| 🔑 Controlador | 🚀 Funcionalidad y Responsabilidad |
+| :--- | :--- |
+| **`CandidatoController`** | Gestión integral de perfiles, hojas de vida y datos biográficos. |
+| **`PreguntaController`** | Manejo del banco de preguntas dinámicas para el test de afinidad. |
+| **`PropuestaController`** | Consulta de planes de gobierno filtrados por categorías. |
+| **`ChatController`** | Interfaz de comunicación para el chatbot electoral con IA. |
+| **`ReporteController`** | Gestión de feedback, reportes de errores y sugerencias. |
+
+---
+
+## 🏗️ Estructura del Proyecto (Paquetes)
+
+La arquitectura está organizada de forma modular para separar la lógica de negocio del acceso a datos:
+
+```text
 src/main/java/com/elecciones/eleccionesperubackend/
-src/main/java/com/elecciones/eleccionesperubackend/
-├── controller   # Endpoints REST (Candidato, Chat, Contacto, etc.)
-├── dto          # Objetos de transferencia (ComparacionDTO, MatchResultDTO)
-├── mapper       # Mapeo de Entidades a DTOs
-├── model        # Entidades JPA (Candidato, Denuncia, Opcion, Regla)
-├── repository   # Interfaces de acceso a datos (Spring Data JPA)
-└── service      # Lógica de IA, Match y Similitud Textual
+ ├── 📂 controller   # Exposición de servicios REST y gestión de rutas.
+ ├── 📂 dto          # Objetos de transferencia (ComparacionDTO, MatchResultDTO).
+ ├── 📂 mapper       # Transformación de datos (Entidad ↔ DTO) con MapStruct.
+ ├── 📂 model        # Entidades JPA (Candidato, Denuncia, Opcion, Regla).
+ ├── 📂 repository   # Interfaces de persistencia con Spring Data JPA.
+ └── 📂 service      # Lógica central: IA, Match y Similitud Semántica.
+
+[!NOTE]
+CORS: El servidor está configurado para aceptar peticiones desde el entorno de desarrollo frontend en http://localhost:5173.
