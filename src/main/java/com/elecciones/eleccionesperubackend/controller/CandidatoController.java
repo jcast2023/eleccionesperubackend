@@ -6,6 +6,7 @@ import com.elecciones.eleccionesperubackend.model.Candidato;
 import com.elecciones.eleccionesperubackend.repository.CandidatoRepository;
 import com.elecciones.eleccionesperubackend.service.MatchService;
 import com.elecciones.eleccionesperubackend.service.ResumenService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +36,7 @@ public class CandidatoController {
 
 
     @GetMapping("/candidatos")
+    @Transactional
     public List<CandidatoDTO> listar() {
         return candidatoRepository.findAll()
                 .stream()
