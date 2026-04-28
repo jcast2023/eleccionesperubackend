@@ -1,9 +1,13 @@
 package com.elecciones.eleccionesperubackend.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "opciones")
+@Getter  // ← agregar
+@Setter
 public class Opcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
