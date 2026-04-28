@@ -1,10 +1,20 @@
 # VotaBienPe - Backend 🗳️🇵🇪
 
 ![Java](https://img.shields.io/badge/Java-21-orange?style=flat-square&logo=openjdk)
-![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.5-brightgreen?style=flat-square&logo=springboot)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-brightgreen?style=flat-square&logo=springboot)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0-blue?style=flat-square&logo=mysql)
 
 Backend de alto rendimiento para **VotaBienPe**, diseñado para procesar información electoral mediante **IA** y **NLP**, permitiendo un voto informado a través de tecnología de punta.
+
+---
+
+## 🌐 Producción
+
+| Servicio | URL |
+| :--- | :--- |
+| ⚙️ **Backend** | https://eleccionesperubackend.onrender.com |
+| 🖥️ **Frontend** | https://elecciones-peru-eta.vercel.app |
+| 🗄️ **Base de datos** | Railway (MySQL 8.0) |
 
 ---
 
@@ -13,9 +23,10 @@ Backend de alto rendimiento para **VotaBienPe**, diseñado para procesar informa
 | Categoría | Tecnología |
 | :--- | :--- |
 | **Lenguaje** | Java 21 (LTS) |
-| **Framework** | Spring Boot 4.0.5 |
-| **Base de Datos** | MySQL 8.0 |
+| **Framework** | Spring Boot 3.3.5 |
+| **Base de Datos** | MySQL 8.0 (Railway) |
 | **IA & NLP** | LangChain4j, Apache OpenNLP, ONNX |
+| **Despliegue** | Render (Docker) |
 
 ---
 
@@ -38,60 +49,84 @@ Uso de **Embeddings** para analizar planes de gobierno conceptualmente, detectan
 
 ---
 
-## ⚙️ Configuración del Entorno
-
-Edita tu archivo `src/main/resources/application.properties`:
-
-properties
-DB_HOST=localhost
-DB_PORT=3306
-DB_NAME=Elecciones2026
-DB_USER=tu_usuario
-DB_PASSWORD=tu_contraseña
-SERVER_PORT=8080
-
-# Clonar repositorio
-git clone [https://github.com/jcast2023/elecciones-peru-backend.git](https://github.com/jcast2023/elecciones-peru-backend.git)
-
-## 🗄️ Diseño de Base de Datos (MySQL)
-
-El sistema utiliza un esquema relacional optimizado para consultas de alta velocidad y análisis de integridad ética. Las entidades clave incluyen:
-
-* **Candidatos:** Almacena perfiles, fotos y metadatos biográficos.
-- **Denuncias:** Tabla crítica para el motor de penalización, vinculada a cada candidato.
-* **Propuestas:** Organizadas por categorías (Seguridad, Salud, Economía) para facilitar el análisis semántico.
-- **Preguntas/Opciones:** Estructura dinámica que permite modificar el test de afinidad sin tocar el código.
-
-# Instalar y compilar
-mvn clean install
-
-# Ejecutar aplicación
-mvn spring-boot:run
-
 ## 📍 API Endpoints Principales
 
-| 🔑 Controlador | 🚀 Funcionalidad y Responsabilidad |
-| :--- | :--- |
-| **`CandidatoController`** | Gestión integral de perfiles, hojas de vida y datos biográficos. |
-| **`PreguntaController`** | Manejo del banco de preguntas dinámicas para el test de afinidad. |
-| **`PropuestaController`** | Consulta de planes de gobierno filtrados por categorías. |
-| **`ChatController`** | Interfaz de comunicación para el chatbot electoral con IA. |
-| **`ReporteController`** | Gestión de feedback, reportes de errores y sugerencias. |
+| Método | Endpoint | Descripción |
+| :--- | :--- | :--- |
+| `GET` | `/api/candidatos` | Lista todos los candidatos con sus denuncias. |
+| `GET` | `/api/preguntas` | Obtiene las preguntas del test de afinidad con opciones. |
+| `GET` | `/api/resumen/{id}` | Resumen ejecutivo de un candidato por ID. |
+| `GET` | `/api/comparar-full?c1={id}&c2={id}` | Comparación completa entre dos candidatos. |
+| `POST` | `/api/match` | Calcula la afinidad política del usuario con los candidatos. |
+| `POST` | `/api/chat` | Chatbot electoral con IA. |
+| `POST` | `/api/contacto` | Envío de mensajes de contacto. |
+| `POST` | `/api/reportes` | Reporte de errores en la información electoral. |
+| `GET` | `/actuator/health` | Estado de salud del servicio. |
 
 ---
 
-## 🏗️ Estructura del Proyecto (Paquetes)
+## ⚙️ Configuración del Entorno Local
 
-La arquitectura está organizada de forma modular para separar la lógica de negocio del acceso a datos:
+Crea un archivo `src/main/resources/application.properties`:
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/Elecciones2026
+spring.datasource.username=tu_usuario
+spring.datasource.password=tu_contraseña
+server.port=8080
+```
+
+### 1️⃣ Clonar el repositorio
+
+```bash
+git clone https://github.com/jcast2023/eleccionesperubackend.git
+cd eleccionesperubackend
+```
+
+### 2️⃣ Compilar y ejecutar
+
+```bash
+mvn clean install
+mvn spring-boot:run
+```
+
+> [!TIP]
+> El backend estará disponible en: http://localhost:8080
+
+---
+
+## 🗄️ Diseño de Base de Datos (MySQL)
+
+El sistema utiliza un esquema relacional optimizado para consultas de alta velocidad:
+
+* **Candidatos:** Perfiles, fotos y metadatos biográficos.
+* **Denuncias:** Motor de penalización ética, vinculada a cada candidato.
+* **Propuestas:** Organizadas por categorías para el análisis semántico.
+* **Preguntas/Opciones:** Estructura dinámica que permite modificar el test sin tocar el código.
+
+---
+
+## 🏗️ Estructura del Proyecto
 
 ```text
 src/main/java/com/elecciones/eleccionesperubackend/
+ ├── 📂 config       # Configuración global de CORS.
  ├── 📂 controller   # Exposición de servicios REST y gestión de rutas.
  ├── 📂 dto          # Objetos de transferencia (ComparacionDTO, MatchResultDTO).
- ├── 📂 mapper       # Transformación de datos (Entidad ↔ DTO) con MapStruct.
- ├── 📂 model        # Entidades JPA (Candidato, Denuncia, Opcion, Regla).
+ ├── 📂 mapper       # Transformación de datos (Entidad ↔ DTO).
+ ├── 📂 model        # Entidades JPA (Candidato, Denuncia, Opcion, Pregunta).
  ├── 📂 repository   # Interfaces de persistencia con Spring Data JPA.
  └── 📂 service      # Lógica central: IA, Match y Similitud Semántica.
+```
 
-[!NOTE]
-CORS: El servidor está configurado para aceptar peticiones desde el entorno de desarrollo frontend en http://localhost:5173.
+---
+
+> [!NOTE]
+> **CORS:** Configurado para aceptar peticiones desde `http://localhost:5173` en desarrollo y `https://elecciones-peru-eta.vercel.app` en producción mediante variable de entorno `FRONTEND_URL`.
+
+---
+
+## 👨‍💻 Autor
+
+Desarrollado por **Julio Edson Castillo Ita**
+Proyecto enfocado en democracia digital e inteligencia artificial aplicada al voto informado en Perú.
