@@ -17,7 +17,8 @@ public class Pregunta {
     private String categoria;
     private double peso; // 1 a 3
 
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Opcion> opciones;
+
 
 }
