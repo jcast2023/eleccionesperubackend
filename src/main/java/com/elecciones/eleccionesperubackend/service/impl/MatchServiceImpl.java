@@ -44,7 +44,7 @@ public class MatchServiceImpl implements MatchService {
 
         Map<String, Integer> respuestasPorCategoria = convertirRespuestas(respuestasUsuario);
 
-        List<Candidato> candidatos = candidatoRepository.findAllWithDenuncias();
+        List<Candidato> candidatos = candidatoRepository.findAllWithDenunciasYPropuestas();
 
         return candidatos.stream()
                 .map(c -> {

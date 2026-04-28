@@ -22,4 +22,7 @@ public interface CandidatoRepository extends JpaRepository<Candidato, Long> {
         WHERE c.id = :id
     """)
     Optional<Candidato> findByIdWithPropuestas(@Param("id") Long id);
+
+    @Query("SELECT DISTINCT c FROM Candidato c LEFT JOIN FETCH c.denuncias LEFT JOIN FETCH c.propuestas")
+    List<Candidato> findAllWithDenunciasYPropuestas();
 }
