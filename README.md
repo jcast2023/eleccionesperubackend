@@ -126,6 +126,19 @@ src/main/java/com/elecciones/eleccionesperubackend/
 
 ---
 
+## 🐳 Despliegue con Docker (Recomendado)
+
+El backend está preparado para ejecutarse en contenedores, lo que garantiza que todas las dependencias (Java 21, MySQL 8.0) se configuren automáticamente.
+
+### Requisitos
+* Docker y Docker Compose instalados.
+
+### Pasos para iniciar:
+1. Asegúrate de tener el archivo `docker-compose.yml` en la raíz del proyecto.
+2. Ejecuta el comando:
+   ```bash
+   docker-compose up -d --build
+
 ## 👨‍💻 Autor
 
 Desarrollado por **Julio Edson Castillo Ita**
